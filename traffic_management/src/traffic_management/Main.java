@@ -28,9 +28,6 @@ public class Main {
 		// Create an instance of EmergencySignal
 		EmergencySignal emergencySignal = new EmergencySignal();
 
-		for (int i = 0; i < lights.size(); i++) {
-			System.out.println(lights.get(i).getColor());
-		}
 
 		// initialize each lane's car number
 		int laneWestNum = roadWest.getCarNum();

@@ -1,32 +1,37 @@
 package traffic_management;
 
 public class TrafficLight {
-	private Color myColor;
+	private Color current_color;
 
 	public TrafficLight() {
-		myColor = Color.RED;
+		current_color = Color.RED;
 	}
 	
 	public void setColor(Color in) {
-		myColor =  in;
+		current_color =  in;
 	}
 
 	public Color getColor() {
-		return myColor;
+		return current_color;
 	}
 
-	public void changeLight(Color current, Color wanted) {
-		if (current == wanted) {
-			myColor = wanted;
-		} else if (current == Color.RED && wanted == Color.GREEN) {
-			// red -> yellow
-			myColor = Color.YELLOW;
-		} else if (current == Color.YELLOW) {
+
+	// cases
+	// red -> yellow -> green
+	// green -> red
+
+	public void changeLight(Color actual, Color wanted) {
+		if (actual == wanted) {
+			current_color = wanted;
+		} else if (actual == Color.RED && wanted == Color.GREEN) {
+			// red -> green
+			current_color = wanted;
+		} else if (actual == Color.GREEN && wanted == Color.RED) {
+			// green -> yellow
+			current_color = Color.YELLOW;
+		} else if (actual == Color.YELLOW) {
 			// yellow -> green
-			myColor = Color.GREEN;
-		} else if (current == Color.GREEN && wanted == Color.RED) {
-			// green -> red
-			myColor = wanted;
+			current_color = Color.RED;
 		}
 	}
 
