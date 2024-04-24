@@ -23,11 +23,10 @@ public class CarCounter {
 	}
 
 	public int getCount() {
+		Random random = new Random();
+		carCount = random.nextInt(6);
 		return carCount;
 	}
 
-	public void setCount(int count) {
-		this.carCount = count;
-	}
 
 }

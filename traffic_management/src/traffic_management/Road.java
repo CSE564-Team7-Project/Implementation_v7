@@ -7,21 +7,11 @@ public class Road {
     TrafficLight light;
     CarCounter carCount;
     Lane lane;
-    Sensor sensor_in;
 
     public Road() {
         light = new TrafficLight();
         carCount = new CarCounter();
         lane = new Lane();
-        sensor_in = new Sensor();
-
-        init();
-    }
-
-    public void init() {
-        int numCars = sensor_in.getNumberOfCars();
-        carCount.setCount(numCars);
-//        lane.add_car(numCars);
     }
 
     // Get traffic light current color
@@ -49,6 +39,9 @@ public class Road {
 
     public void dequeueLane() {
         lane.remove_car();
+    }
+    public void setLaneQ(Queue<Direction> queue) {
+        lane.cars_waiting = queue;
     }
 
 

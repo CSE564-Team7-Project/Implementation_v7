@@ -1,9 +1,6 @@
 package traffic_management;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Main {
 	public static void main(String[] args) {
@@ -20,9 +17,11 @@ public class Main {
 		Road roadSouth = new Road();
 
 		//create list of each lane's car number: cars.get(0) = lane1, cars.get(1) = lane2....
-		List<Integer> cars = new ArrayList<Integer>();
+		List<Integer> cars = new ArrayList<>();
+
+
 		//create list of two lights: lights.get(0) = lane1&2, lights.get(1) = lane3&4
-		List<TrafficLight> lights = new ArrayList<TrafficLight>();
+		List<TrafficLight> lights = new ArrayList<>();
 		lights.add(westeastLight); // initialize =  red
 		lights.add(northsouthLight); // initialize =  red
 
@@ -34,8 +33,9 @@ public class Main {
 		int laneSouthNum = roadSouth.getCarNum();
 
 
+
 		//100 rounds
-		for(int i = 0; i < 50; i++) {
+		for(int i = 0; i < 30; i++) {
 			System.out.println("======= ROUND " + (i+1)+ " START =======" );
 			//each round add random number of cars to each lane
 			if(i > 0) {
@@ -46,12 +46,14 @@ public class Main {
 
 			}
 
+
 			System.out.println("-------Cars waiting-------");
 			System.out.println("West car Number : " +  laneWestNum);
 			System.out.println("East car Number : " +  laneEastNum);
 			System.out.println("North car Number : " +  laneNorthNum);
 			System.out.println("South car Number : " +  laneSouthNum);
 			System.out.println("--------------------------");
+
 
 			cars.clear();
 			cars.add(laneWestNum);
@@ -60,15 +62,22 @@ public class Main {
 			cars.add(laneSouthNum);
 
 
-			roadWest.addCar(laneWestNum);
-			roadEast.addCar(laneEastNum);
-			roadNorth.addCar(laneNorthNum);
-			roadSouth.addCar(laneSouthNum);
+			roadWest.addCar(cars.get(0));
+			roadEast.addCar(cars.get(1));
+			roadNorth.addCar(cars.get(2));
+			roadSouth.addCar(cars.get(3));
+
 
 			Queue<Direction> westLaneQueue = roadWest.getLaneQ();
 			Queue<Direction> eastLaneQueue = roadEast.getLaneQ();
 			Queue<Direction> northLaneQueue = roadNorth.getLaneQ();
 			Queue<Direction> southLaneQueue = roadSouth.getLaneQ();
+
+			System.out.println("Lane Queues");
+			System.out.println(westLaneQueue);
+			System.out.println(eastLaneQueue);
+			System.out.println(northLaneQueue);
+			System.out.println(southLaneQueue);
 
 
 			Color current_color_WE = lights.get(0).getColor();
@@ -77,26 +86,26 @@ public class Main {
 			tc.decideLights(cars, lights);
 
 			Queue<Queue<Direction>> tempQueue = westeastDC.controlDirection(westLaneQueue, eastLaneQueue, current_color_WE);
+			westLaneQueue = tempQueue.poll();
+			eastLaneQueue = tempQueue.poll();
 
-			//calculate how many cars move
 			List<Integer> decrease_east = westeastDC.decreaseCarNum(westLaneQueue, eastLaneQueue, current_color_WE, cars.get(0), cars.get(1));
 			cars.set(0, cars.get(0) - decrease_east.get(0));
 			cars.set(1, cars.get(1) - decrease_east.get(1));
 
-			westLaneQueue = tempQueue.peek();//directions of Lane_West
-			tempQueue.poll();
-			eastLaneQueue = tempQueue.peek();//directions of Lane_East
-
 			tempQueue = northsouthDC.controlDirection(southLaneQueue, northLaneQueue, current_color_NS);
+			southLaneQueue = tempQueue.poll();
+			northLaneQueue = tempQueue.poll();
 
-			//calculate how many cars move
 			List<Integer> decrease_south = northsouthDC.decreaseCarNum(southLaneQueue, northLaneQueue, current_color_NS, cars.get(3), cars.get(2));
 			cars.set(2, cars.get(2) - decrease_south.get(1));
 			cars.set(3, cars.get(3) - decrease_south.get(0));
 
-			southLaneQueue = tempQueue.peek();//directions of Lane_South
-			tempQueue.poll();
-			northLaneQueue = tempQueue.peek();//directions of Lane_North
+			// Updates the lane queue
+			roadWest.setLaneQ(westLaneQueue);
+			roadEast.setLaneQ(eastLaneQueue);
+			roadNorth.setLaneQ(northLaneQueue);
+			roadSouth.setLaneQ(southLaneQueue);
 
 			System.out.println("--------cars moved--------");
 			System.out.println("West move : " +  decrease_east.get(0) + " cars");

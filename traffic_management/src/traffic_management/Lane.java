@@ -8,7 +8,8 @@ public class Lane {
 	Car Car = new Car();
 
 	public void add_car(int i) {
-		for(int j = 0; j < i; j++) {
+		cars_waiting.clear(); // Clear the existing cars_waiting queue
+		for (int j = 0; j < i; j++) {
 			cars_waiting.offer(Car.getCarDirect());
 		}
 	}
