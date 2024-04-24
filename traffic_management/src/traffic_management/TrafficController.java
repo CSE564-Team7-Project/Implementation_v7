@@ -9,15 +9,15 @@ public class TrafficController {
 		// Check for emergency
 		if (emergencySignal.isEmergency()) {
 			if (emergencySignal.checkCardinal()) {
-				// NS bound emergency
-				lights.get(0).setColor(Color.RED);
-				lights.get(1).setColor(Color.GREEN);
-				System.out.println("EMERGENCY: North-South bound");
-			} else {
 				// EW bound emergency
 				lights.get(0).setColor(Color.GREEN);
 				lights.get(1).setColor(Color.RED);
 				System.out.println("EMERGENCY: East-West bound");
+			} else {
+				// NS bound emergency
+				lights.get(0).setColor(Color.RED);
+				lights.get(1).setColor(Color.GREEN);
+				System.out.println("EMERGENCY: North-South bound");
 			}
 			return;
 		}

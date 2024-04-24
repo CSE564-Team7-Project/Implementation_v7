@@ -11,7 +11,9 @@ public class EmergencySignal {
         return camera.getEmergency() <= 30;
     }
 
-    // Cardinal denotes emergency vehicle is NS bound
+    // Cardinal denotes emergency vehicle direction
+    // 0 or false => NS bound
+    // 1 or true => WE bound
     public boolean checkCardinal() {
         Random randCardinal = new Random();
 
