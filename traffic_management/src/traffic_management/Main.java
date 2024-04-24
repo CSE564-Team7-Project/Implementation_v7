@@ -28,9 +28,9 @@ public class Main {
 		// Create an instance of EmergencySignal
 		EmergencySignal emergencySignal = new EmergencySignal();
 
-        for (TrafficLight light : lights) {
-            System.out.println(light.getColor());
-        }
+		for (int i = 0; i < lights.size(); i++) {
+			System.out.println(lights.get(i).getColor());
+		}
 
 		// initialize each lane's car number
 		int laneWestNum = roadWest.getCarNum();
@@ -78,30 +78,32 @@ public class Main {
 
 			tc.decideLights(cars, lights, emergencySignal);
 
-			Thread westEastDC_Thread = new Thread(() -> {
-                Queue<Queue<Direction>> tempQueue = westeastDC.controlDirection(new LinkedList<>(westLaneQueue), new LinkedList<>(eastLaneQueue), current_color_WE);
-                Queue<Direction> newWestLaneQueue = tempQueue.poll();
-                Queue<Direction> newEastLaneQueue = tempQueue.poll();
+			Thread westEastDC_Thread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					Queue<Queue<Direction>> tempQueue = westeastDC.controlDirection(new LinkedList<>(westLaneQueue), new LinkedList<>(eastLaneQueue), current_color_WE);
+					Queue<Direction> newWestLaneQueue = tempQueue.poll();
+					Queue<Direction> newEastLaneQueue = tempQueue.poll();
 
-                List<Integer> decrease_east = westeastDC.decreaseCarNum(newWestLaneQueue, newEastLaneQueue, current_color_WE, cars.get(0), cars.get(1));
-                cars.set(0, cars.get(0) - decrease_east.get(0));
-                cars.set(1, cars.get(1) - decrease_east.get(1));
+					List<Integer> decrease_east = westeastDC.decreaseCarNum(newWestLaneQueue, newEastLaneQueue, current_color_WE, cars.get(0), cars.get(1));
+					cars.set(0, cars.get(0) - decrease_east.get(0));
+					cars.set(1, cars.get(1) - decrease_east.get(1));
 
-                // Updates the lane queue
-                roadWest.setLaneQ(newWestLaneQueue);
-                roadEast.setLaneQ(newEastLaneQueue);
+					// Updates the lane queue
+					roadWest.setLaneQ(newWestLaneQueue);
+					roadEast.setLaneQ(newEastLaneQueue);
 
-                Color wanted_color_WE = lights.get(0).getColor();
-                lights.get(0).changeLight(current_color_WE, wanted_color_WE);
+					Color wanted_color_WE = lights.get(0).getColor();
+					lights.get(0).changeLight(current_color_WE, wanted_color_WE);
 
-                System.out.println("West move : " + decrease_east.get(0) + " cars");
-                System.out.println("East move : " + decrease_east.get(1) + " cars");
+					System.out.println("West move : " + decrease_east.get(0) + " cars");
+					System.out.println("East move : " + decrease_east.get(1) + " cars");
 
-            });
+				}
+			});
 
 			Thread northSouthDC_Thread = new Thread(new Runnable() {
 				@Override
-
 				public void run() {
 					Queue<Queue<Direction>> tempQueue = northsouthDC.controlDirection(new LinkedList<>(southLaneQueue), new LinkedList<>(northLaneQueue), current_color_NS);
 					Queue<Direction> newSouthLaneQueue = tempQueue.poll();

@@ -48,7 +48,7 @@ public class DirectionControl {
 		Queue<Direction> Lane2 = new LinkedList<>(queue2);
 		boolean Lane1dec = false;
 		boolean Lane2dec = false;
-		List<Integer> resultList = new ArrayList<Integer>();;
+		List<Integer> resultList = new ArrayList<>();;
 		int lane1Numdec = 0;
 		int lane2Numdec = 0;
 		if(currentColor == Color.GREEN) {

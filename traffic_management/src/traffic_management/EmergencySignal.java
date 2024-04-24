@@ -8,11 +8,7 @@ public class EmergencySignal {
     Camera camera = new Camera();
 
     public boolean isEmergency() {
-        if (camera.getEmergency() <= 30) {
-            return true;
-        } else {
-            return false;
-        }
+        return camera.getEmergency() <= 30;
     }
 
     // Cardinal denotes emergency vehicle is NS bound

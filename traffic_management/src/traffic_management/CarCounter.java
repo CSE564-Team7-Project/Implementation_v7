@@ -2,8 +2,7 @@ package traffic_management;
 import java.util.Random;
 
 public class CarCounter {
-	//create random carNumber from 0-10
-	Random random = new Random();
+
 	private int carCount = 0;
 	
 	public void increment() { 
