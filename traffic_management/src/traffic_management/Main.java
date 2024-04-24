@@ -25,6 +25,9 @@ public class Main {
 		lights.add(westeastLight); // initialize =  red
 		lights.add(northsouthLight); // initialize =  red
 
+		for (int i = 0; i < lights.size(); i++) {
+			System.out.println(lights.get(i).getColor());
+		}
 
 		//initialize each lane's car number
 		int laneWestNum = roadWest.getCarNum();
@@ -35,7 +38,7 @@ public class Main {
 
 
 		//100 rounds
-		for(int i = 0; i < 30; i++) {
+		for(int i = 0; i < 50; i++) {
 			System.out.println("======= ROUND " + (i+1)+ " START =======" );
 			//each round add random number of cars to each lane
 			if(i > 0) {
@@ -46,7 +49,6 @@ public class Main {
 
 			}
 
-
 			System.out.println("-------Cars waiting-------");
 			System.out.println("West car Number : " +  laneWestNum);
 			System.out.println("East car Number : " +  laneEastNum);
@@ -54,30 +56,21 @@ public class Main {
 			System.out.println("South car Number : " +  laneSouthNum);
 			System.out.println("--------------------------");
 
-
 			cars.clear();
 			cars.add(laneWestNum);
 			cars.add(laneEastNum);
 			cars.add(laneNorthNum);
 			cars.add(laneSouthNum);
 
-
 			roadWest.addCar(cars.get(0));
 			roadEast.addCar(cars.get(1));
 			roadNorth.addCar(cars.get(2));
 			roadSouth.addCar(cars.get(3));
 
-
 			Queue<Direction> westLaneQueue = roadWest.getLaneQ();
 			Queue<Direction> eastLaneQueue = roadEast.getLaneQ();
 			Queue<Direction> northLaneQueue = roadNorth.getLaneQ();
 			Queue<Direction> southLaneQueue = roadSouth.getLaneQ();
-
-			System.out.println("Lane Queues");
-			System.out.println(westLaneQueue);
-			System.out.println(eastLaneQueue);
-			System.out.println(northLaneQueue);
-			System.out.println(southLaneQueue);
 
 
 			Color current_color_WE = lights.get(0).getColor();
