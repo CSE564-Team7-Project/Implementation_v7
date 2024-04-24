@@ -46,6 +46,9 @@ public class Road {
 
 
 
+    public synchronized void moveCar() {
+        lane.remove_car();
+    }
 
 
 }

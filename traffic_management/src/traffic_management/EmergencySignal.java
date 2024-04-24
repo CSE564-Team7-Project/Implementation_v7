@@ -8,7 +8,7 @@ public class EmergencySignal {
     Camera camera = new Camera();
 
     public boolean isEmergency() {
-        if (camera.getEmergency() <= 35) {
+        if (camera.getEmergency() <= 30) {
             return true;
         } else {
             return false;
